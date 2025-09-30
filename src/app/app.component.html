@@ -20,8 +20,8 @@
       Upload Excel
     </label>
 
+  </div><br/>
+   
+  <button class="upload-btn-main" [disabled]="!selectedFile" (click)="onUpload()">Upload</button>
 
-  </div>
-
-  <button [disabled]="!selectedFile" (click)="onUpload()">Upload</button>
 </div>
