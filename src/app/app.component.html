@@ -4,20 +4,24 @@
   <div class="upload-buttons">
     <!-- Image Upload -->
     <label class="upload-btn">
-      <input type="file" accept="image/png, image/jpeg" hidden>
+      <input type="file" accept="image/png, image/jpeg" (change)="onFileSelected($event, 'image')" hidden>
       Upload Image
     </label>
 
     <!-- PDF Upload -->
     <label class="upload-btn">
-      <input type="file" accept="application/pdf" hidden>
+      <input type="file" accept="application/pdf" (change)="onFileSelected($event, 'pdf')" hidden>
       Upload PDF
     </label>
 
     <!-- Excel Upload -->
     <label class="upload-btn">
-      <input type="file" accept=".xls,.xlsx" hidden>
+      <input type="file" accept=".xls,.xlsx" (change)="onFileSelected($event, 'excel')" hidden>
       Upload Excel
     </label>
+
+
   </div>
+
+  <button [disabled]="!selectedFile" (click)="onUpload()">Upload</button>
 </div>
