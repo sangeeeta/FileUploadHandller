@@ -1,6 +1,6 @@
 <div class="upload-container">
   <h2>Upload Files</h2>
-  
+
   <div class="upload-buttons">
     <!-- Image Upload -->
     <label class="upload-btn">
@@ -20,8 +20,35 @@
       Upload Excel
     </label>
 
-  </div><br/>
-   
+  </div><br />
+
   <button class="upload-btn-main" [disabled]="!selectedFile" (click)="onUpload()">Upload</button>
 
+</div>
+
+
+
+<div class="products-page">
+  <div class="table-wrapper">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>File Name</th>
+          <th>Type</th>
+          <th>Uploaded At</th>
+          <th>Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of files">
+          <td>{{file.id}}</td>
+          <td>{{file.fileName}}</td>
+          <td>{{file.fileType}}</td>
+          <td>{{file.uploadedAt}}</td>
+          <td><button (click)="download(file.id, file.fileName)">Download</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

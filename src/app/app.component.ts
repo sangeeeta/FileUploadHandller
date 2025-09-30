@@ -76,10 +76,12 @@
 import { Component } from '@angular/core';
 import { FileUploadService } from './file-upload.service';
 import { HttpEventType } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -88,8 +90,12 @@ export class AppComponent {
   fileType: string = '';
   uploadProgress: number = 0;
   message: string = '';
+  files: any[] = [];
 
   constructor(private fileUploadService: FileUploadService) { }
+  ngOnInit() {
+    this.loadFiles();
+  }
 
   onFileSelected(event: any, type: string) {
     const file: File = event.target.files[0];
@@ -138,6 +144,7 @@ export class AppComponent {
           this.message = `${this.fileType.toUpperCase()} uploaded successfully!`;
           this.uploadProgress = 0;
           this.selectedFile = null;
+          this.loadFiles();
         }
       },
       error => {
@@ -146,6 +153,27 @@ export class AppComponent {
         this.uploadProgress = 0;
       }
     );
+  }
+
+  loadFiles() {
+    this.fileUploadService.getAllFiles().subscribe(res => {
+      this.files = res.sort(
+        (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+      );
+
+      //this.files = res;
+    });
+  }
+
+  download(fileId: number, fileName: string) {
+    this.fileUploadService.downloadFile(fileId).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }
 

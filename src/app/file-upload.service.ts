@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class FileUploadService {
   private baseUrl = 'https://localhost:7098/api'; // ASP.NET Core API root
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   uploadPdf(file: File): Observable<HttpEvent<any>> {
     return this.uploadFile(file, 'pdf', 'uploadPdf');
@@ -31,4 +31,14 @@ export class FileUploadService {
       observe: 'events'
     });
   }
+
+  //Fetch all files to display in table
+  getAllFiles(): Observable<any[]> {
+    return this.http.get<any[]>('https://localhost:7098/api/Files');
+  }
+
+  downloadFile(id: number) {
+    return this.http.get(`https://localhost:7098/api/Files/Download/${id}`, { responseType: 'blob' });
+  }
+
 }
