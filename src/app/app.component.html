@@ -45,8 +45,12 @@
           <td>{{file.id}}</td>
           <td>{{file.fileName}}</td>
           <td>{{file.fileType}}</td>
-          <td>{{file.uploadedAt}}</td>
-          <td><button (click)="download(file.id, file.fileName)">Download</button></td>
+          <td>{{ file.uploadedAt | date:'dd-MMM-yyyy hh:mm a' }}</td>
+          <td>
+            <button class="download-btn" (click)="download(file.id, file.fileName)">
+              Download
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
